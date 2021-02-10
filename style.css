@@ -9,9 +9,26 @@
     box-sizing: border-box;
 }
 
+html {
+    font-size: 93.75% /*15px*/;
+}
+
 body {
     background: #f0f2f5;
     font-family: 'Poppins', sans-serif;
+}
+
+/*CSS-TRICK (Screen Reader) Esconde o elemento da página mas ainda permite Screen Readers ler o seu conteúdo*/
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
 }
 
 .container {
@@ -41,6 +58,53 @@ h2 {
     font-weight: normal;
 }
 
+/*LINKS & BUTTONS ========================= */
+a {
+    color: green;
+    text-decoration: none;
+}
+
+a:hover {
+    color: rgb(47, 214, 47);
+}
+
+.button.new {
+    display: inline-block;
+    margin-bottom: .8rem;
+}
+
+button {
+    width: 100%;
+    height: 50px;
+    border: none;
+    border-radius: 0.25rem;
+    background: green;
+    color: white;
+    padding: 0;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+}
+
+button:hover {
+    background: rgb(2, 170, 2);
+}
+
+.button.cancel {
+    color: #e92929;
+    border: 2px #e92929 solid;
+    border-radius: 0.25rem;
+    height: 50px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.6;
+}
+
+.button.cancel:hover {
+    opacity: 1;
+}
+
 /*BALANCE ========================= */
 #balance {
     margin-top: -8rem;
@@ -59,12 +123,16 @@ h2 {
 
     margin-bottom: 3rem;
 
-    color: var(--dark-blue)
+    color: var(--dark-blue);
 }
 
 .card h3 {
     font-size: 1rem;
     font-weight: normal;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .card p {
@@ -79,6 +147,12 @@ h2 {
 }
 
 /*TABLE ========================= */
+#transaction {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+}
+
 #data-table {
     width: 100%;
     border-spacing: 0 0.5rem;
@@ -88,6 +162,11 @@ h2 {
 table thead tr th:first-child,
 table tbody tr td:first-child {
     border-radius: 0.25rem 0 0 0.25rem;
+}
+
+table thead tr th:last-child,
+table tbody tr td:last-child {
+    border-radius: 0 0.25rem 0.25rem 0;
 }
 
 table thead th {
@@ -124,10 +203,86 @@ td.expense {
     color: #e92929;
 }
 
+/*MODAL ========================= */
+.modal-overlay {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    opacity: 0;
+    visibility: hidden;
+
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal {
+    background: #f0f2f5;
+    padding: 2.4rem;
+}
+
+/*FORM ============================ */
+#form {
+    max-width: 500px;
+}
+
+#form h2 {
+    margin-top: 0;
+}
+
+input {
+    border: none;
+    border-radius: 0.2rem;
+    width: 100%;
+    padding: 0.8rem;
+
+}
+
+.input-group {
+    margin-top: 0.8rem;
+}
+
+.input-group small {
+    opacity: 0.4;
+}
+
+.input-group.actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.input-group.actions .button,
+.input-group.actions button {
+    width: 48%;
+}
+
 /*FOOTER ========================= */
 footer {
     text-align: center;
     padding: 4rem 0 2rem;
     color: var(--dark-blue);
     opacity: 0.6;
+}
+
+/*RESPONSIVE ========================= */
+@media (min-width: 800px) {
+    html {
+        font-size: 87.5%;
+    }
+
+    #balance {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+    }
 }
