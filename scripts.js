@@ -35,9 +35,16 @@ const transactions = [
 ]
 
 const Transaction = {
+    all: transactions,
+
+    add(transaction){
+        Transaction.all.push(transaction)
+
+        App.reload()
+    },
     incomes() {
         let incomeAmount = 0
-        transactions.forEach(function(transaction) {
+        Transaction.all.forEach(function(transaction) {
             if(transaction.amount > 0) {
                 incomeAmount += transaction.amount
             }
@@ -46,7 +53,7 @@ const Transaction = {
     },
     expenses() {
         let expenseAmount = 0
-        transactions.forEach(function(transaction) {
+        Transaction.all.forEach(function(transaction) {
             if(transaction.amount < 0) {
                 expenseAmount += transaction.amount
             }
@@ -83,7 +90,6 @@ const DOM = {
 
         return html
     },
-    
     updateBalance() {
         incomeDisplay = document.querySelector('#incomeDisplay')
         expenseDisplay = document.querySelector('#expenseDisplay')
@@ -92,11 +98,23 @@ const DOM = {
         incomeDisplay.innerHTML = Utils.formatCurrency(Transaction.incomes())
         expenseDisplay.innerHTML = Utils.formatCurrency(Transaction.expenses())
         totalDisplay.innerHTML = Utils.formatCurrency(Transaction.total())
+    },
+    clearTransactions() {
+        this.transactionsContainer.innerHTML = ""
     }
-
 }
 
 const Utils = {
+
+    formatDate(date) {
+        const splittedDate = date.split("-")
+        return `${splittedDate[2]}/${splittedDate[1]}/${splittedDate[0]}`
+    },
+    formatAmount(value){
+        value = Number(value) * 100
+
+        return value
+    },
     formatCurrency(value) {
         const signal = Number(value) < 0 ? "-" : ""
 
@@ -113,7 +131,72 @@ const Utils = {
     }
 }
 
-transactions.forEach(function(transaction) {
-    DOM.addTransaction(transaction)
-})
-DOM.updateBalance()
+const Form = {
+    description: document.querySelector('input#description'),
+    amount: document.querySelector('input#amount'),
+    date: document.querySelector('input#date'),
+
+    getValues() {
+        return {
+            description: Form.description.value,
+            amount: Form.amount.value,
+            date: Form.date.value,
+        }
+    },
+    validateFields() {
+        const {description, amount, date} = Form.getValues()
+
+        if(description.trim() === "" || amount.trim() === "" || date.trim() === ""){
+            throw new Error('Por favor, preencha todos os campos')
+        }
+    },
+    formatValues() {
+        let {description, amount, date} = Form.getValues()
+        amount = Number(Utils.formatAmount(amount))
+        date = Utils.formatDate(date)
+        return {
+            description,
+            amount,
+            date
+        }
+    },
+    clearFields() {
+        Form.description.value = ""
+        Form.amount.value = ""
+        Form.date.value = ""
+    },
+    submit(event) {
+        event.preventDefault()
+
+        try {
+            // Verifica se os campos não estão vazios
+            Form.validateFields()
+            // Cria a transação com os dados e adiciona ao Array
+            const transaction = Form.formatValues()
+            Transaction.add(transaction)
+            // Apaga os valores dos campos do formulário
+            Form.clearFields()
+            // Fecha o Modal
+            Modal.close()
+            // Reinicia a aplicação com os novos valores já adicionados
+        } catch (error) {
+            alert(error.message)
+        }
+        
+    }
+}
+
+const App = {
+    init() {
+        transactions.forEach(function(transaction) {
+            DOM.addTransaction(transaction)
+        })
+        DOM.updateBalance()
+    },
+    reload() {
+        DOM.clearTransactions()
+        App.init()
+    }
+}
+
+App.init()

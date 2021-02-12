@@ -65,7 +65,7 @@
         <div class="modal">
             <div id="form">
                 <h2>Nova Transação</h2>
-                <form action="">
+                <form action="" onsubmit="Form.submit(event)">
                     <div class="input-group">
                         <label class="sr-only" for="description">Descrição</label>
                         <input 
@@ -80,6 +80,7 @@
                         <label class="sr-only" for="amount">Valor</label>
                         <input 
                             type="number"
+                            step=".01"
                             id="amount"
                             name="amount"
                             placeholder="0,00"
