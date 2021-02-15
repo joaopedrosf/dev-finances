@@ -3,6 +3,7 @@ const Modal = {
         document.querySelector('.modal-overlay').classList.add('active')
     },
     close() {
+        Form.clearFields()
         document.querySelector('.modal-overlay').classList.remove('active')
     }
 }
@@ -162,8 +163,7 @@ const Form = {
             // Cria a transação com os dados e adiciona ao Array
             const transaction = Form.formatValues()
             Transaction.add(transaction)
-            // Apaga os valores dos campos do formulário
-            Form.clearFields()
+            // Apaga os valores dos campos do formulário e
             // Fecha o Modal
             Modal.close()
             // Reinicia a aplicação com os novos valores já adicionados
