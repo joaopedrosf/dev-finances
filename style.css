@@ -142,7 +142,8 @@ button:hover {
 }
 
 .card.total {
-    background: #49AA26;
+    /*background: #49AA26;*/
+    background: #55963E;
     color: white;
 }
 
@@ -282,6 +283,45 @@ footer {
     color: var(--dark-blue);
     opacity: 0.6;
 }
+
+/*INTRO ==============================*/
+div.intro {
+    background: #2D4A22;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 998;
+}
+
+div.slider {
+    background: #365929;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 998;
+    transform: translateY(100%);
+}
+
+.intro-img-container {
+    background: #2D4A22;
+    overflow: hidden;
+}
+
+.hide {
+    transform: translateY(150%);
+    display: inline-block;
+}
+
 
 /*RESPONSIVE ========================= */
 @media (min-width: 800px) {

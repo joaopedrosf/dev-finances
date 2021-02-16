@@ -1,3 +1,12 @@
+const Intro = {
+    startIntro(){
+        const tl = gsap.timeline({defaults: {ease: "power1.out"}})
+        tl.to('.hide', {y: '0%', duration: 0.75})
+        tl.to('.slider', {y: '-100%', duration: 1.5})
+        tl.to('.intro', {y: '-100%', duration: 1}, '-=1.1')
+    }
+}
+
 const Modal = {
     open() {
         document.querySelector('.modal-overlay').classList.add('active')
@@ -186,4 +195,5 @@ const App = {
     }
 }
 
+Intro.startIntro()
 App.init()
