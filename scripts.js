@@ -23,6 +23,9 @@ const Storage = {
     },
     set(transactions) {
         localStorage.setItem("dev.finances:transactions", JSON.stringify(transactions))
+    },
+    removeAll(){
+        localStorage.removeItem("dev.finances:transactions")
     }
 }
 
@@ -37,6 +40,11 @@ const Transaction = {
     remove(index){
         Transaction.all.splice(index, 1)
 
+        App.reload()
+    },
+    removeAll() {
+        Storage.removeAll()
+        Transaction.all = []
         App.reload()
     },
     incomes() {

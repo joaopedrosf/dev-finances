@@ -59,18 +59,28 @@ h2 {
 }
 
 /*LINKS & BUTTONS ========================= */
-a {
+
+.button.new {
     color: green;
     text-decoration: none;
+    display: inline-block;
+    margin-bottom: .8rem;
 }
 
-a:hover {
+.button.new:hover {
     color: rgb(47, 214, 47);
 }
 
-.button.new {
+.button.remove-all {
+    color: #9c232b;
+    text-decoration: none;
     display: inline-block;
     margin-bottom: .8rem;
+}
+
+.button.remove-all:hover {
+    /* color:#e92929; */
+    filter: brightness(150%);
 }
 
 button {
@@ -103,6 +113,13 @@ button:hover {
 
 .button.cancel:hover {
     opacity: 1;
+}
+
+/*BUTTONS-CONTAINER*/
+
+.buttons-container {
+    display: flex;
+    justify-content: space-between;
 }
 
 /*BALANCE ========================= */
