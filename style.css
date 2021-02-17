@@ -142,8 +142,12 @@ button:hover {
 }
 
 .card.total {
-    /*background: #49AA26;*/
     background: #55963E;
+    color: white;
+}
+
+.card.total.negative {
+    background: #9c232b;
     color: white;
 }
 

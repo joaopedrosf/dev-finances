@@ -92,10 +92,19 @@ const DOM = {
         incomeDisplay = document.querySelector('#incomeDisplay')
         expenseDisplay = document.querySelector('#expenseDisplay')
         totalDisplay = document.querySelector('#totalDisplay')
+        totalCard = document.querySelector('.card.total')
 
         incomeDisplay.innerHTML = Utils.formatCurrency(Transaction.incomes())
         expenseDisplay.innerHTML = Utils.formatCurrency(Transaction.expenses())
         totalDisplay.innerHTML = Utils.formatCurrency(Transaction.total())
+
+        if(Transaction.total() < 0) {
+            totalCard.classList.add('negative')
+        }
+        else{
+            totalCard.classList.remove('negative')
+        }
+        
     },
     clearTransactions() {
         this.transactionsContainer.innerHTML = ""
