@@ -213,7 +213,7 @@ table tbody td {
     padding: 1rem 2rem;
 }
 
-td.description {
+td.income-description, td.expense-description {
     color: var(--dark-blue);
 }
 
@@ -295,6 +295,14 @@ input {
 .input-group.actions .button,
 .input-group.actions button {
     width: 48%;
+}
+/*CHART ===========================*/
+
+#chart {
+    height: 100;
+    width: 200;
+    text-align: center;
+    margin-top: 2rem;
 }
 
 /*FOOTER ========================= */

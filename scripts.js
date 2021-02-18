@@ -81,13 +81,14 @@ const DOM = {
         DOM.transactionsContainer.appendChild(tr)
     },
     innerHTMLTransaction(transaction, index) {
-        const CSSclass = transaction.amount > 0 ? "income" : "expense"
+        const amountClass = transaction.amount > 0 ? "income" : "expense"
+        const descriptionClass = transaction.amount > 0 ? "income-description" : "expense-description"
 
         const amount = Utils.formatCurrency(transaction.amount)
 
         const html = `
-            <td class="description">${transaction.description}</td>
-            <td class="${CSSclass}">${amount}</td>
+            <td class="${descriptionClass}">${transaction.description}</td>
+            <td class="${amountClass}">${amount}</td>
             <td class="date">${transaction.date}</td>
             <td>
                 <img class="remove-transaction" onclick="Transaction.remove(${index})" src="./assets/minus.svg" alt="Deletar transação">
@@ -200,11 +201,59 @@ const Form = {
     }
 }
 
+const ChartGenerator = {
+    getLabels() {
+        let descriptionsHTML = document.getElementsByClassName("expense-description");
+        let descriptionsArray = Array.from(descriptionsHTML);
+        let descriptionValues = []
+        descriptionsArray.forEach(d => {
+            descriptionValues.push(d.innerHTML)
+        })
+
+        return descriptionValues;
+    },
+    getExpensesData() {
+        let expenseHTML = document.getElementsByClassName("expense");
+        let expenseArray = Array.from(expenseHTML);
+        let expenseValues = [];
+
+        expenseArray.forEach(e => {
+            expenseValues.push(Number(e.innerHTML.replace(/\D/g, "")) / 100);
+        })
+        return expenseValues;
+    },
+    generateChart() {
+        let ctx = document.getElementById("chart").getContext("2d")
+        let colorsHex = ["#f94144ff", "#f3722cff", "#f8961eff", "#f9844aff", "#f9c74fff", "#90be6dff", "#43aa8bff", "#4d908eff", "#577590ff", "#277da1ff"]
+        
+        try {
+            ChartGenerator.chart.destroy()    
+        } catch (error) {
+            
+        }
+
+        ChartGenerator.chart = new Chart(ctx, {
+            type: "pie",
+            data: {
+                datasets: [{
+                    data: ChartGenerator.getExpensesData(),
+                    backgroundColor: colorsHex
+                }],
+                labels: ChartGenerator.getLabels()
+            },
+            options: {
+                responsive: true
+            }
+        })
+    }
+}
+
 const App = {
     init() {
         Transaction.all.forEach(DOM.addTransaction)
         DOM.updateBalance()
         Storage.set(Transaction.all)
+        ChartGenerator.generateChart()
     },
     reload() {
         DOM.clearTransactions()
@@ -214,3 +263,5 @@ const App = {
 
 Intro.startIntro()
 App.init()
+
+
