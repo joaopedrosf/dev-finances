@@ -233,7 +233,7 @@ const ChartGenerator = {
         }
 
         ChartGenerator.chart = new Chart(ctx, {
-            type: "pie",
+            type: "doughnut",
             data: {
                 datasets: [{
                     data: ChartGenerator.getExpensesData(),
@@ -242,6 +242,15 @@ const ChartGenerator = {
                 labels: ChartGenerator.getLabels()
             },
             options: {
+                tooltips: {
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            expenseDescription = data.labels[tooltipItem.index]
+                            expenseAmount = String(data.datasets[0].data[tooltipItem.index]).replace(".", ",")
+                            return expenseDescription + ": R$ " + expenseAmount 
+                        }
+                    }
+                },
                 responsive: true
             }
         })
