@@ -83,14 +83,15 @@ const DOM = {
     innerHTMLTransaction(transaction, index) {
         const amountClass = transaction.amount > 0 ? "income" : "expense"
         const descriptionClass = transaction.amount > 0 ? "income-description" : "expense-description"
+        const darkModeClass = Utils.isDarkMode() ? "dark" : ""
 
         const amount = Utils.formatCurrency(transaction.amount)
 
         const html = `
-            <td class="${descriptionClass}">${transaction.description}</td>
-            <td class="${amountClass}">${amount}</td>
-            <td class="date">${transaction.date}</td>
-            <td>
+            <td class="${descriptionClass} ${darkModeClass}">${transaction.description}</td>
+            <td class="${amountClass} ${darkModeClass}">${amount}</td>
+            <td class="date ${darkModeClass}">${transaction.date}</td>
+            <td class="${darkModeClass}">
                 <img class="remove-transaction" onclick="Transaction.remove(${index})" src="./assets/minus.svg" alt="Deletar transação">
             </td>
         `
@@ -144,6 +145,10 @@ const Utils = {
         })
 
         return signal + value
+    },
+    isDarkMode() {
+        const darkSwitch = document.querySelector("#dark-switch")
+        return darkSwitch.checked
     }
 }
 
@@ -237,7 +242,8 @@ const ChartGenerator = {
             data: {
                 datasets: [{
                     data: ChartGenerator.getExpensesData(),
-                    backgroundColor: colorsHex
+                    backgroundColor: colorsHex,
+                    borderWidth: 0
                 }],
                 labels: ChartGenerator.getLabels()
             },
@@ -254,6 +260,32 @@ const ChartGenerator = {
                 responsive: true
             }
         })
+    }
+}
+
+const DarkSwitch = {
+    toggle() {
+        const body = document.getElementsByTagName("body")[0];
+        const removeAllButton = document.querySelector(".button.remove-all");
+        const newTransactionButton = document.querySelector(".button.new");
+        const darkModeLabel = document.querySelector(".dark-mode-label");
+        let cards = Array.from(document.getElementsByClassName("card"));
+        let tds = Array.from(document.getElementsByTagName("td"));
+        let ths = Array.from(document.getElementsByTagName("th"));
+        
+        tds.forEach(function(td) {
+            td.classList.toggle("dark");
+        })
+        ths.forEach(function(th) {
+            th.classList.toggle("dark");
+        })
+        cards.forEach(function(card) {
+            card.classList.toggle("dark");
+        })
+        body.classList.toggle("dark");
+        removeAllButton.classList.toggle("dark");
+        newTransactionButton.classList.toggle("dark");
+        darkModeLabel.classList.toggle("dark");
     }
 }
 
