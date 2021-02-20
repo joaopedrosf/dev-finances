@@ -10,11 +10,11 @@
 
 ## Índice:
 
-- [Sobre](#:book:-Sobre)
+- [Sobre](#book-sobre)
 
-- [Tecnologias](#:computer:-Tecnologias)
+- [Tecnologias](#computer-tecnologias)
 
-- [Como utilizar o projeto](#:open_file_folder:-Como-utilizar-o-projeto)
+- [Como utilizar o projeto](#open_file_folder-como-utilizar-o-projeto)
 
   
 
@@ -55,9 +55,4 @@
 
 ## :open_file_folder: Como utilizar o projeto
 
-<a href = “https://dev-finances-joaopedrosf.netlify.app/">Clique aqui para acessar</a>
-
-
-
-
-
+<a href="https://dev-finances-joaopedrosf.netlify.app/">Clique aqui para acessar</a>
